@@ -5,6 +5,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from torchtune.datasets._alpaca import alpaca_cleaned_dataset, alpaca_dataset
+from torchtune.datasets._magpie import magpie_dataset
 from torchtune.datasets._chat import chat_dataset, ChatDataset
 from torchtune.datasets._cnn_dailymail import cnn_dailymail_articles_dataset
 from torchtune.datasets._concat import ConcatDataset
@@ -24,6 +25,7 @@ from torchtune.datasets._wikitext import wikitext_dataset
 __all__ = [
     "alpaca_dataset",
     "alpaca_cleaned_dataset",
+    "magpie_dataset",
     "grammar_dataset",
     "samsum_dataset",
     "stack_exchanged_paired_dataset",

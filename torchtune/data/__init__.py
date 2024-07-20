@@ -18,6 +18,7 @@ from torchtune.data._instruct_templates import (
     InstructTemplate,
     StackExchangedPairedTemplate,
     SummarizeTemplate,
+    MagpieTemplate,
 )
 from torchtune.data._types import Message, Role
 from torchtune.data._utils import truncate, validate_messages
@@ -29,6 +30,7 @@ __all__ = [
     "GrammarErrorCorrectionTemplate",
     "InstructTemplate",
     "SummarizeTemplate",
+    "MagpieTemplate",
     "Llama2ChatFormat",
     "MistralChatFormat",
     "ChatMLFormat",
