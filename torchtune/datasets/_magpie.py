@@ -17,18 +17,6 @@ def magpie_dataset(
     packed: bool = False,
 ) -> InstructDataset:
     """
-    Support for family of Alpaca-style datasets from Hugging Face Datasets using
-    the `data input format <https://huggingface.co/datasets/tatsu-lab/alpaca#data-instances>`_
-    and `prompt template <https://github.com/tatsu-lab/stanford_alpaca/blob/main/train.py#L31>`_
-    from the original alpaca codebase, where ``instruction``, ``input``, and ``output``
-    are fields from the dataset.
-
-    Masking of the prompt during training is controlled by the ``train_on_input`` flag, which is
-    set to ``True`` by `default <https://github.com/tloen/alpaca-lora/blob/main/finetune.py#L49>`_
-    - If ``train_on_input`` is True, the prompt is used during training and
-    contributes to the loss.
-    - If ``train_on_input`` is False, the prompt is masked out (tokens replaced with -100)
-
     Args:
         tokenizer (ModelTokenizer): Tokenizer used by the model that implements the ``tokenize_messages`` method.
         source (str): path string of dataset, anything supported by Hugging Face's ``load_dataset``.
