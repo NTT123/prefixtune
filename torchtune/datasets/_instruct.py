@@ -95,21 +95,24 @@ class InstructDataset(Dataset):
             else "output"
         )
         messages = [
-            Message(role="user", content=prompt, masked=(not self.train_on_input)),
+            Message(role="user", content=prompt, masked=True),
             Message(role="assistant", content=transformed_sample[key_output]),
         ]
 
         validate_messages(messages)
 
         tokens, mask = self._tokenizer.tokenize_messages(
-            messages, max_seq_len=self.max_seq_len
+            messages, max_seq_len=self.max_seq_len, add_eos=True
         )
 
         # Wherever mask == True, set to CROSS_ENTROPY_IGNORE_IDX. Otherwise keep as tokens
         labels = list(np.where(mask, CROSS_ENTROPY_IGNORE_IDX, tokens))
+        prefix_mask = list(mask)
+        # For prefix mask, we ignore eos.
+        prefix_mask[-1] = False
         assert len(tokens) == len(labels)
 
-        return {"tokens": tokens, "labels": labels}
+        return {"tokens": tokens, "labels": labels, "prefix_mask": prefix_mask}
 
 
 def instruct_dataset(

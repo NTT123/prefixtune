@@ -68,7 +68,20 @@ def padded_collate(
             (0, labels_seq_len - input_ids_seq_len),
             value=padding_idx,
         )
-    return {"tokens": input_ids, "labels": labels}
+
+    if "prefix_mask" in batch[0]:
+        mask = pad_sequence(
+            [torch.tensor(x["prefix_mask"]) for x in batch],
+            batch_first=True,
+            padding_value=False,
+        )
+        casual_mask = torch.tril(
+            torch.ones(input_ids_seq_len, input_ids_seq_len, dtype=torch.bool)
+        )
+        mask = torch.logical_or(mask[:, None, :], casual_mask[None, :, :])
+        return {"tokens": input_ids, "labels": labels, "mask": mask}
+    else:
+        return {"tokens": input_ids, "labels": labels}
 
 
 def padded_collate_dpo(
